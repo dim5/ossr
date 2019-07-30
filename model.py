@@ -59,7 +59,7 @@ class SiAudNet(nn.Module):
 
         res = torch.abs(sample_b - sample_a)
         res = self.classifier(res)
-        res = res.view(-1)  # TODO BCE
+        res = res.view(-1)
         return res
 
     def load_dict(self, file_name: str = "model_siaudnet.pt"):
