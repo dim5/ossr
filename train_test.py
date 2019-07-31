@@ -1,9 +1,10 @@
-import torch
 import numpy as np
+import torch
 import torch.nn as nn
 from torch import optim
-from model import SiAudNet
 from tqdm.auto import tqdm
+
+from model import SiAudNet
 
 
 def train(
