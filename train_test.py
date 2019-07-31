@@ -128,14 +128,13 @@ def test(model: nn.Module, test_on_gpu: bool,
     test_loss = test_loss / len(test_loader.dataset)
     print(f"Test Loss: {test_loss:.6f}\n")
 
-    for i in range(len(classes)):
+    for i, nn_class in enumerate(classes):
         if class_total[i] > 0:
             print(
-                f"Test Accuracy of {classes[i]:5}:{100 * class_correct[i] / class_total[i]:2} ({np.sum(class_correct[i]):2}/{np.sum(class_total[i]):2})"
+                f"Test Accuracy of {nn_class:5}:{100 * class_correct[i] / class_total[i]:2} ({np.sum(class_correct[i]):2}/{np.sum(class_total[i]):2})"
             )
         else:
-            print(
-                f"Test Accuracy of {classes[i]:5}: N/A (no training examples)")
+            print(f"Test Accuracy of {nn_class:5}: N/A")
 
     print(
         f"\nOverall Test Accuracy: {100.0 * np.sum(class_correct) / np.sum(class_total):2} ({np.sum(class_correct):2}/{np.sum(class_total):2})"
