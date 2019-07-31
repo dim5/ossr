@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 from collections import OrderedDict
-from torch import optim
 
 
 class SiAudNet(nn.Module):
