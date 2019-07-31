@@ -5,7 +5,6 @@ import librosa as lr
 import os, glob, re
 import pandas as pd
 from tqdm.auto import tqdm
-from pickle import HIGHEST_PROTOCOL
 from functools import lru_cache
 from typing import Sequence, List
 from random import sample
@@ -174,6 +173,7 @@ if __name__ == "__main__":
     # df = CsvHelper.create_train_valid_csvs(path=r".\LibriSpeech\dev-clean")
     # libri_train_dev = LibirSet.from_csv(
     #     r"P:\ml\ossr\LibriSpeech\dev-clean\train_pairs.csv")
+    # from pickle import HIGHEST_PROTOCOL
     # torch.save(libri_train_dev,
     #            "dev_train.pt",
     #            pickle_protocol=HIGHEST_PROTOCOL)
