@@ -1,8 +1,6 @@
-import numpy as np
 import torch
 import torch.nn as nn
 from torch import optim
-from torch.utils.data.sampler import SubsetRandomSampler
 
 from data import LibirSet
 from model import SiAudNet
@@ -43,7 +41,6 @@ def trainer() -> None:
     batch_size = 32
     n_epochs = 50
 
-    # train_data = LibirSet("./LibriSpeech/train-clean-100", from_csv=True)
     train_data = torch.load("dev_train.pt")
     valid_data = torch.load("dev_valid.pt")
 
