@@ -26,7 +26,7 @@ def train(
                                                          verbose=True)
 
     valid_loss_min = np.Inf  # track change in validation loss
-    for epoch in range(1, n_epochs + 1):
+    for epoch in range(n_epochs):
 
         train_loss = 0.0
         valid_loss = 0.0
@@ -93,8 +93,8 @@ def test(model: SiAudNet, test_on_gpu: bool,
     # track test loss
     test_loss = 0.0
     classes = ["not match", "match"]
-    class_correct = list(0.0 for i in range(len(classes)))
-    class_total = list(0.0 for i in range(len(classes)))
+    class_correct = [0, 0]
+    class_total = [0, 0]
 
     if test_on_gpu:
         model = model.cuda()
@@ -117,12 +117,12 @@ def test(model: SiAudNet, test_on_gpu: bool,
 
             pred = sigmoid(output)
 
-            for i in range(len(data)):
-                if target[i] > 0.5:
-                    class_correct[1] += 1 if pred[i] > 0.5 else 0
+            for curr_target, curr_pred in zip(target, pred):
+                if curr_target > 0.5:
+                    class_correct[1] += 1 if curr_pred > 0.5 else 0
                     class_total[1] += 1
                 else:
-                    class_correct[0] += 1 if pred[i] <= 0.5 else 0
+                    class_correct[0] += 1 if curr_pred <= 0.5 else 0
                     class_total[0] += 1
 
     # average test loss
@@ -132,11 +132,11 @@ def test(model: SiAudNet, test_on_gpu: bool,
     for i, nn_class in enumerate(classes):
         if class_total[i] > 0:
             print(
-                f"Test Accuracy of {nn_class:5}:{100 * class_correct[i] / class_total[i]:2} ({np.sum(class_correct[i]):2}/{np.sum(class_total[i]):2})"
+                f"Test Accuracy of {nn_class+':':11}{class_correct[i] / class_total[i]:.3%} ({np.sum(class_correct[i])}/{np.sum(class_total[i])})"
             )
         else:
-            print(f"Test Accuracy of {nn_class:5}: N/A")
+            print(f"Test Accuracy of {nn_class+':':11} N/A")
 
     print(
-        f"\nOverall Test Accuracy: {100.0 * np.sum(class_correct) / np.sum(class_total):2} ({np.sum(class_correct):2}/{np.sum(class_total):2})"
+        f"\nOverall Test Accuracy: {np.sum(class_correct) / np.sum(class_total):.3%} ({np.sum(class_correct)}/{np.sum(class_total)})"
     )
