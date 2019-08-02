@@ -50,11 +50,11 @@ class SiAudNet(nn.Module):
         (sample_a, sample_b) = data
 
         sample_a = self.conv(sample_a)
-        sample_a = sample_a.view(-1, self.end_size)  # flatten
+        sample_a = sample_a.view(-1, self._end_size)  # flatten
         sample_a = self.linear(sample_a)
 
         sample_b = self.conv(sample_b)
-        sample_b = sample_b.view(-1, self.end_size)  # flatten
+        sample_b = sample_b.view(-1, self._end_size)  # flatten
         sample_b = self.linear(sample_b)
 
         res = torch.abs(sample_b - sample_a)

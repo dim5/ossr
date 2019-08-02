@@ -57,15 +57,15 @@ class CsvHelper():
         return int(m.groups()[0])
 
     @classmethod
-    def create_test_csv(cls, test_path: str,
+    def create_test_csv(cls, path: str,
                         create_file: bool = True) -> pd.DataFrame:
         files = [
             os.path.abspath(fn)
-            for fn in glob.iglob(f"{test_path}/**/*.flac", recursive=True)
+            for fn in glob.iglob(f"{path}/**/*.flac", recursive=True)
         ]
         data_pd = cls._df_from_labels(files)
         if create_file:
-            data_pd.to_csv(f"{test_path}/pairs.csv")
+            data_pd.to_csv(f"{path}/pairs.csv")
         return data_pd
 
     @classmethod
@@ -173,13 +173,12 @@ class LibirSet(Dataset):
 if __name__ == "__main__":
     # Call dataset
     print("Testing..")
-    # df = CsvHelper.create_train_valid_csvs(path=r".\LibriSpeech\dev-clean")
-    # libri_train_dev = LibirSet.from_csv(
-    #     r"P:\ml\ossr\LibriSpeech\dev-clean\train_pairs.csv")
-    # from pickle import HIGHEST_PROTOCOL
-    # torch.save(libri_train_dev,
-    #            "dev_train.pt",
-    #            pickle_protocol=HIGHEST_PROTOCOL)
-    libri_dev = torch.load("dev_train.pt")
-    res = libri_dev[0]
-    print(res[0][0].shape)
+    df = CsvHelper.create_test_csv(path=r".\LibriSpeech\test-clean")
+    # libri_valid_dev = LibirSet.from_csv(
+    #     r"P:\ml\ossr\LibriSpeech\dev-clean\valid_pairs.csv")
+    libir_test = LibirSet(df)
+    from pickle import HIGHEST_PROTOCOL
+    torch.save(libir_test, "test_clean.pt", pickle_protocol=HIGHEST_PROTOCOL)
+    # libri_dev = torch.load("dev_train.pt")
+    # res = libri_dev[0]
+    # print(res[0][0].shape)
