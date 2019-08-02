@@ -8,7 +8,7 @@ from model import SiAudNet
 
 
 def train(
-        model: nn.Module,
+        model: SiAudNet,
         train_on_gpu: bool,
         n_epochs: int,
         train_loader: torch.utils.data.DataLoader,
@@ -87,7 +87,7 @@ def train(
     model.load_state_dict(torch.load(file_name))
 
 
-def test(model: nn.Module, test_on_gpu: bool,
+def test(model: SiAudNet, test_on_gpu: bool,
          test_loader: torch.utils.data.DataLoader) -> None:
     print("Testing...")
     # track test loss
