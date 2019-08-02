@@ -1,11 +1,12 @@
-from data import LibirSet
-import torch
 import numpy as np
-from torch.utils.data.sampler import SubsetRandomSampler
+import torch
 import torch.nn as nn
 from torch import optim
+from torch.utils.data.sampler import SubsetRandomSampler
+
+from data import LibirSet
 from model import SiAudNet
-from train_test import train, test
+from train_test import test, train
 
 sigmoid = nn.Sigmoid()
 
