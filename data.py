@@ -31,7 +31,8 @@ class AudioHelper():
     @staticmethod
     def _time_series_to_meltensor(y: np.ndarray,
                                   sr: int = 16000) -> torch.Tensor:
-        lr.util.fix_length(y, sr)
+        if y.size != sr:
+            y = lr.util.pad_center(y, sr)
 
         melspec = lr.feature.melspectrogram(y=y,
                                             sr=sr,
